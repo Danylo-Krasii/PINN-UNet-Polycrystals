@@ -1,0 +1,7 @@
+# Prediction of A(x) of a zener-8 volume with the best draw of the paper (labels-energy-adaptive, seed 1; test error 11.52 %), on the CPU in float64.
+# The dtype is that of src/evaluation/score.py, which scores the checkpoints. The checkpoint and the dtype have no default: write them.
+# Run: uv run infer --config configs/infer/zener-8.yaml --input data/zener-8/sve_1160.hdf5 --output outputs/predictions
+model: single_pass_unet
+checkpoint: "{CHECKPOINTS}/zener-8-labels-energy-adaptive-s1.pt"
+dtype: float64
+device: cpu

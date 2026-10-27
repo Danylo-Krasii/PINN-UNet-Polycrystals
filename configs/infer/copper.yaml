@@ -1,0 +1,7 @@
+# Prediction of A(x) of a copper volume with the best draw of the paper (labels-energy-adaptive, seed 3; test error 3.152 %), on the CPU in float64.
+# The dtype is that of src/evaluation/score.py, which scores the checkpoints. The checkpoint and the dtype have no default: write them.
+# Run: uv run infer --config configs/infer/copper.yaml --input data/copper/sve_1160.hdf5 --output outputs/predictions
+model: single_pass_unet
+checkpoint: "{CHECKPOINTS}/copper-labels-energy-adaptive-s3.pt"
+dtype: float64
+device: cpu

@@ -1,0 +1,27 @@
+# Data and trained weights: the folders hold a README.md only (docs/DATA.md, docs/TRAINING.md).
+/data/*
+!/data/README.md
+/checkpoints/*
+!/checkpoints/README.md
+*.hdf5
+*.h5
+*.npz
+*.pt
+
+# Run output
+/logs/
+/outputs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.env
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/

@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pinn-unet-polycrystals"
+version = "0.1.0"
+description = "Physics-informed training of a single-pass U-Net surrogate for the stress-localization tensor of 3D polycrystals"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+license = { text = "MIT" }
+authors = [{ name = "Danylo Krasiy", email = "krasiydm@gmail.com" }]
+dependencies = [
+    "numpy>=1.24",
+    "h5py>=3.8",
+    "pyyaml>=6.0.3",
+]
+
+[project.scripts]
+train = "src.train:main"
+infer = "src.infer:main"
+score = "src.evaluation.score:main"
+lbfgs = "src.training.lbfgs:main"
+
+[project.optional-dependencies]
+# Training. Install torch separately with the CUDA build matching the machine;
+# the runs of the paper used torch 2.3.1+cu118 on an NVIDIA RTX A5000.
+train = ["torch>=2.3"]
+dev = ["ruff>=0.5", "pytest>=8.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.uv]
+# The versions of the runs of the paper (docs/INSTALLATION.md).
+constraint-dependencies = ["torch==2.3.1", "numpy==1.26.4"]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu118" }
+
+[[tool.uv.index]]
+name = "pytorch-cu118"
+url = "https://download.pytorch.org/whl/cu118"
+explicit = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+namespaces = false
+
+[tool.ruff]
+line-length = 110
+src = [".", "src"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
+ignore = ["E501", "E741"]

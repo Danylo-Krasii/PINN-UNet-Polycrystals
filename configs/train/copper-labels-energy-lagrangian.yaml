@@ -1,0 +1,24 @@
+# labels-energy-lagrangian on copper (Table 2 of the paper): the energy loss subject to the label loss at most D_t, by an augmented Lagrangian (the form of PECANN with one inequality constraint).
+# The options are those of the runs of the paper: at most 96,000 steps; the run stops 6,000 steps after its best state or last rewind, never before step 12,000;
+# the guard with the midpoint test and at most 20 rewinds; the peak rate 1.25e-4 (in quotes, so that YAML keeps it as text). Seeds of the paper: 0, 1, 2.
+# lambda_f is the fixed weight lambda_F of labels-energy-fixed, from which the loss of labels-energy-lagrangian starts.
+# label_target is D_t = 1.05 D_L, with D_L the largest training label loss of the three trained labels-only draws on copper.
+# The initial weights of the paper's draws are the files initial-<material>-s<seed>.pt of the weights folder (docs/TRAINING.md);
+# `--set init=null` starts from the native initialization of torch instead, which gives other draws.
+# Run: uv run train --config configs/train/copper-labels-energy-lagrangian.yaml [--set seed=1] [--dry-run]
+model: single_pass_unet
+configuration: labels-energy-lagrangian
+material: copper
+seed: 0
+steps: 96000
+patience: 6000
+min_stop_step: 12000
+peak: "1.25e-4"
+max_rewinds: 20
+midpoint_guard: true
+lambda_f: "3.0454335833546127"
+label_target: "0.027132353081610314"
+init: "{CHECKPOINTS}/initial-{material}-s{seed}.pt"
+data_dir: "{DATA}"
+out: "{ROOT}/outputs/runs"
+device: cuda

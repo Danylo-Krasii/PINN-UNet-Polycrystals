@@ -1,0 +1,20 @@
+# labels-energy-adaptive on copper (Table 2 of the paper): the label loss plus the energy loss; the weight of the energy is the ratio of the gradient norms, measured every 100 steps.
+# The options are those of the runs of the paper: at most 96,000 steps; the run stops 6,000 steps after its best state or last rewind, never before step 12,000;
+# the guard with the midpoint test and at most 20 rewinds; the peak rate 1.25e-4 (in quotes, so that YAML keeps it as text). Seeds of the paper: 0, 1, 3 (the draw with the seed 2 stalled, and the seed 3 replaced it).
+# The initial weights of the paper's draws are the files initial-<material>-s<seed>.pt of the weights folder (docs/TRAINING.md);
+# `--set init=null` starts from the native initialization of torch instead, which gives other draws.
+# Run: uv run train --config configs/train/copper-labels-energy-adaptive.yaml [--set seed=1] [--dry-run]
+model: single_pass_unet
+configuration: labels-energy-adaptive
+material: copper
+seed: 0
+steps: 96000
+patience: 6000
+min_stop_step: 12000
+peak: "1.25e-4"
+max_rewinds: 20
+midpoint_guard: true
+init: "{CHECKPOINTS}/initial-{material}-s{seed}.pt"
+data_dir: "{DATA}"
+out: "{ROOT}/outputs/runs"
+device: cuda
